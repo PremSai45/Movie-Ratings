@@ -1,0 +1,124 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("C:\\Users\\prema sai\\OneDrive\\Desktop\\Pythonproject\\movie_ratings.csv")
+
+# Convert 'in_theaters_date' to datetime and extract year
+df['year'] = pd.to_datetime(df['in_theaters_date'], errors='coerce').dt.year
+
+# Define consistent colors
+color_critic = 'crimson'
+color_audience = 'dodgerblue'
+color_bar = 'steelblue'
+color_pie = ['#ff9999','#66b3ff','#99ff99','#ffcc99','#c2c2f0']
+"""
+# Objective 1: Rating trends over time
+ratings_by_year = df.groupby('year')[['tomatometer_rating', 'audience_rating']].mean().dropna()
+ratings_by_year.plot(figsize=(12, 5), title='Average Ratings Over Time', color=[color_critic, color_audience])
+plt.ylabel("Average Rating")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+# Objective 2: Bar Graphs
+# Top Genres
+df['genre'].dropna().str.split(',').explode().str.strip().value_counts().head(10).plot(
+    kind='barh', title='Top 10 Genres', color=color_bar)
+plt.xlabel("Count")
+plt.tight_layout()
+plt.show()
+
+# Top Studios
+df['studio_name'].dropna().value_counts().head(10).plot(
+    kind='barh', title='Top 10 Studios', color=color_bar)
+plt.xlabel("Count")
+plt.tight_layout()
+plt.show()
+
+# Top Directors
+df['directors'].dropna().str.split(',').explode().str.strip().value_counts().head(10).plot(
+    kind='barh', title='Top 10 Directors', color=color_bar)
+plt.xlabel("Count")
+plt.tight_layout()
+plt.show()
+
+# Top Rating Certifications
+df['rating'].dropna().value_counts().head(10).plot(
+    kind='barh', title='Top Rating Certifications', color=color_bar)
+plt.xlabel("Count")
+plt.tight_layout()
+plt.show()
+
+# Objective 3: Pie Charts
+# Genre Distribution
+df['genre'].dropna().str.split(',').explode().str.strip().value_counts().head(5).plot(
+    kind='pie', autopct='%1.1f%%', title='Top Genre Distribution', colors=color_pie)
+plt.ylabel('')
+plt.tight_layout()
+plt.show()
+
+# Tomatometer Status
+df['tomatometer_status'].value_counts().plot(
+    kind='pie', autopct='%1.1f%%', title='Tomatometer Status Distribution', colors=color_pie)
+plt.ylabel('')
+plt.tight_layout()
+plt.show()
+
+# Rating Distribution
+df['rating'].value_counts().head(5).plot(
+    kind='pie', autopct='%1.1f%%', title='Rating Certification Distribution', colors=color_pie)
+plt.ylabel('')
+plt.tight_layout()
+plt.show()
+
+
+# Objective 4: Top 10 Movies
+top_critics = df[['movie_title', 'tomatometer_rating']].dropna().sort_values(
+    by='tomatometer_rating', ascending=False).head(10)
+top_audience = df[['movie_title', 'audience_rating']].dropna().sort_values(
+    by='audience_rating', ascending=False).head(10)
+
+print("Top 10 Movies by Critic Rating:")
+print(top_critics)
+
+print("\nTop 10 Movies by Audience Rating:")
+print(top_audience)
+
+# Objective 5: Correlations
+print("\nCorrelation Matrix:")
+print(df[['tomatometer_rating', 'audience_rating', 'runtime_in_minutes']].corr())
+
+sns.heatmap(df[['tomatometer_rating', 'audience_rating', 'runtime_in_minutes']].corr(),
+            annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+plt.title("Correlation Heatmap")
+plt.tight_layout()
+plt.show()
+# Objective 6: Histograms
+df['tomatometer_rating'].dropna().plot(kind='hist', bins=20, color=color_critic, alpha=0.6, title='Critic Ratings Distribution')
+plt.xlabel("Tomatometer Rating")
+plt.tight_layout()
+plt.show()
+
+df['audience_rating'].dropna().plot(kind='hist', bins=20, color=color_audience, alpha=0.6, title='Audience Ratings Distribution')
+plt.xlabel("Audience Rating")
+plt.tight_layout()
+plt.show()
+
+df['runtime_in_minutes'].dropna().plot(kind='hist', bins=20, color='darkgreen', alpha=0.6, title='Runtime Distribution')
+plt.xlabel("Runtime (minutes)")
+plt.tight_layout()
+plt.show()
+
+"""
+# Objective 7: Averages
+avg_critic = df['tomatometer_rating'].mean()
+avg_audience = df['audience_rating'].mean()
+avg_runtime = df['runtime_in_minutes'].mean()
+
+print(f"\nAverage Critic Rating: {avg_critic:.2f}")
+print(f"Average Audience Rating: {avg_audience:.2f}")
+print(f"Average Runtime: {avg_runtime:.2f} minutes")
+
