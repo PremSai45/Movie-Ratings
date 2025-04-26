@@ -5,7 +5,7 @@ import seaborn as sns
 
 # Load dataset
 df = pd.read_csv("C:\\Users\\prema sai\\OneDrive\\Desktop\\Pythonproject\\movie_ratings.csv")
-
+#
 # Convert 'in_theaters_date' to datetime and extract year
 df['year'] = pd.to_datetime(df['in_theaters_date'], errors='coerce').dt.year
 
